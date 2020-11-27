@@ -14,6 +14,24 @@ Node *create(int info){
 
     return n;
 }
+Node *leftrotate(Node *n){
+    Node *x=n->right;
+    Node *y=x->left;
+
+    x->left=n;
+    n->right=y;
+    n->height=height(n);
+    x->height=height(x);
+}
+Node *rightrotate(Node *n){
+    Node *x=n->left;
+    Node *y=x->right;
+
+    x->right=n;
+    n->left=y;
+    n->height=height(n);
+    x->height=height(x);
+}
 int max(int a, int b){
     if(a>b)
       return a;
@@ -22,13 +40,13 @@ int max(int a, int b){
 int balance(int left, int right){
     return left-right;
 }
-int height(Node *n, int num){
+int height(Node *n){
+  int num;
         num=1+max(n->left->height, n->right->height);
         return num;
 }
 
 void insert(Node *n,int num){
-  Node *ptr;
  
     if(n->info>num){
         insert(n->left,num);
@@ -36,9 +54,8 @@ void insert(Node *n,int num){
     else if(n->info<num){
       insert(n->right,num);
     }
-    else{cout<<"Equal numbers not allowed";}
+    else{cout<<"Equal numbers not allowed"; return;}
 
-    ptr->height=1+max(n->left->height,n->right->height);
   
     int b=balance(n->left,n->right);
 
